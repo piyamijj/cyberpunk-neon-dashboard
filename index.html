@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang='tr'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>NEON//CORE — Cyberpunk Dashboard</title>
+<link rel='preconnect' href='https://fonts.googleapis.com'>
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+<link href='https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap' rel='stylesheet'>
+<link rel='stylesheet' href='style.css'>
+</head>
+<body>
+<canvas id='stars'></canvas>
+<div class='scanlines'></div>
+
+<header class='topbar'>
+  <div class='logo'>
+    <span class='glitch' data-text='NEON//CORE'>NEON//CORE</span>
+    <small>orbital command dashboard v2.077</small>
+  </div>
+  <div class='status'><span class='dot'></span> SYS ONLINE · UPTIME <span id='uptime'>00:00:00</span></div>
+</header>
+
+<main class='grid'>
+  <section class='card clock-card'>
+    <div class='card-head'>
+      <h2>// ZAMAN SENKRONU</h2>
+      <span class='tag'>UTC<span id='tz'></span></span>
+    </div>
+    <div class='clock' id='clock'>00:00:00</div>
+    <div class='date' id='date'></div>
+    <div class='orbit'>
+      <div class='planet'></div>
+      <div class='ring r1'><span></span></div>
+      <div class='ring r2'><span></span></div>
+    </div>
+    <div class='sec-bar'><div id='secFill'></div></div>
+  </section>
+
+  <section class='card chart-card'>
+    <div class='card-head'>
+      <h2>// PİYASA AKIŞI</h2>
+      <div class='tabs' id='tabs'>
+        <button class='tab active' data-asset='BTC'>BTC</button>
+        <button class='tab' data-asset='ETH'>ETH</button>
+        <button class='tab' data-asset='SOL'>SOL</button>
+        <button class='tab' data-asset='USDTRY'>USD/TRY</button>
+        <button class='tab' data-asset='EURTRY'>EUR/TRY</button>
+      </div>
+    </div>
+    <div class='price-row'>
+      <div>
+        <span class='asset-name' id='assetName'>BTC/USD</span>
+        <div class='price' id='price'>0</div>
+      </div>
+      <div class='change up' id='change'>+0.00%</div>
+    </div>
+    <div class='chart-wrap'>
+      <canvas id='chart'></canvas>
+      <div class='tooltip' id='tooltip'></div>
+    </div>
+    <div class='stats'>
+      <div><small>YÜKSEK</small><span id='high'>-</span></div>
+      <div><small>DÜŞÜK</small><span id='low'>-</span></div>
+      <div><small>HACİM</small><span id='vol'>-</span></div>
+      <button id='pauseBtn' class='btn-mini'>DURDUR</button>
+    </div>
+  </section>
+
+  <section class='card todo-card'>
+    <div class='card-head'>
+      <h2>// GÖREV PROTOKOLÜ</h2>
+      <span class='count' id='todoCount'>0 AKTİF</span>
+    </div>
+    <form class='todo-form' id='todoForm' autocomplete='off'>
+      <input id='todoInput' type='text' placeholder='Yeni görev girin...' maxlength='120'>
+      <select id='todoPrio' aria-label='Öncelik'>
+        <option value='low'>DÜŞÜK</option>
+        <option value='mid' selected>ORTA</option>
+        <option value='high'>YÜKSEK</option>
+      </select>
+      <button type='submit' class='btn-add' aria-label='Ekle'>+</button>
+    </form>
+    <ul class='todo-list' id='todoList'></ul>
+    <div class='todo-foot'>
+      <div class='filters' id='filters'>
+        <button class='tab active' data-filter='all'>TÜMÜ</button>
+        <button class='tab' data-filter='active'>AKTİF</button>
+        <button class='tab' data-filter='done'>BİTEN</button>
+      </div>
+      <button class='btn-clear' id='clearDone'>BİTENLERİ TEMİZLE</button>
+    </div>
+    <p class='hint'>⋮⋮ tutup sürükleyerek sırala · metne çift tıklayarak düzenle</p>
+  </section>
+
+  <section class='card calc-card' id='calcCard'>
+    <div class='card-head'>
+      <h2>// KUANTUM HESAP</h2>
+      <span class='tag'>KLAVYE AKTİF</span>
+    </div>
+    <div class='calc-display'>
+      <div class='calc-expr' id='calcExpr'>&nbsp;</div>
+      <div class='calc-result' id='calcResult'>0</div>
+    </div>
+    <div class='keys' id='keys'>
+      <button class='key fn' data-key='C'>C</button>
+      <button class='key fn' data-key='back'>⌫</button>
+      <button class='key fn' data-key='%'>%</button>
+      <button class='key op' data-key='/'>÷</button>
+      <button class='key' data-key='7'>7</button>
+      <button class='key' data-key='8'>8</button>
+      <button class='key' data-key='9'>9</button>
+      <button class='key op' data-key='*'>×</button>
+      <button class='key' data-key='4'>4</button>
+      <button class='key' data-key='5'>5</button>
+      <button class='key' data-key='6'>6</button>
+      <button class='key op' data-key='-'>−</button>
+      <button class='key' data-key='1'>1</button>
+      <button class='key' data-key='2'>2</button>
+      <button class='key' data-key='3'>3</button>
+      <button class='key op' data-key='+'>+</button>
+      <button class='key fn' data-key='neg'>±</button>
+      <button class='key' data-key='0'>0</button>
+      <button class='key' data-key='.'>.</button>
+      <button class='key eq' data-key='='>=</button>
+    </div>
+  </section>
+</main>
+
+<footer>NEON//CORE © 2077 · ORBITAL STATION 7 · TÜM SİSTEMLER AKTİF</footer>
+<script src='script.js'></script>
+</body>
+</html>
